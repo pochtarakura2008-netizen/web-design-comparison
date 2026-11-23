@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дослідження стилів вебдизайну</title>
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5fa;
+  color: #25253c;
+}
+button, input, select, textarea {
+  font: inherit;
+}
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #ed76b6;
+  outline-offset: 3px;
+}
+header {
+  background: linear-gradient(125deg,#17162e,#51438e,#9569d6);
+  color: white;
+  padding: 28px 7% 85px;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.logo span { color: #d8baff; }
+nav a { color: white; text-decoration: none; }
+.hero { max-width: 760px; margin-top: 95px; }
+.hero small { letter-spacing: 3px; }
+.hero h1 {
+  font-size: clamp(38px,6vw,70px);
+  line-height: 1.1;
+  margin: 20px 0;
+}
+.hero p { font-size: 18px; line-height: 1.7; }
+.hero a {
+  display: inline-block;
+  margin-top: 20px;
+  background: white;
+  color: #25253c;
+  padding: 15px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+}
+main { max-width: 1200px; margin: auto; padding: 65px 22px; }
+.section-heading { text-align: center; margin-bottom: 35px; }
+.section-heading h2 { font-size: 34px; }
+.section-heading p { color: #666; line-height: 1.6; }
+.style-options {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 25px;
+  margin-bottom: 55px;
+}
+.option {
+  min-height: 235px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .25s;
+}
+.option:hover { transform: translateY(-6px); }
+.option h3 { font-size: 26px; margin: 10px 0; }
+.option p { line-height: 1.6; }
+.option button { padding: 13px 16px; font-weight: bold; }
+.option.brutalism {
+  background: #ffe13c;
+  border: 4px solid black;
+  box-shadow: 7px 7px black;
+}
+.option.brutalism button {
+  background: black;
+  color: white;
+  border: 2px solid black;
+}
+.option.neumorphism {
+  background: #e8ebf2;
+  border-radius: 25px;
+  box-shadow: 9px 9px 18px #c6c9d0,
+             -9px -9px 18px white;
+}
+.option.neumorphism button {
+  border: none;
+  border-radius: 14px;
+  color: #343c59;
+  background: #e8ebf2;
+  box-shadow: 4px 4px 8px #c6c9d0,
+             -4px -4px 8px white;
+}
+.option.glassmorphism {
+  background: linear-gradient(130deg,#4569ed,#ad62d2);
+  border-radius: 23px;
+  color: white;
+  box-shadow: 0 12px 30px #b6a6d6;
+}
+.option.glassmorphism button {
+  border: 1px solid #ffffff99;
+  border-radius: 12px;
+  color: white;
+  background: #ffffff30;
+  backdrop-filter: blur(15px);
+}
+
+/* ОДИН І ТОЙ САМИЙ ІНТЕРФЕЙС */
+.demo-section { margin-top: 70px; }
+.demo-section > h2 { font-size: 32px; }
+.demo-section > p { color: #666; line-height: 1.7; }
+.demo {
+  --surface: #e8ebf2;
+  --ink: #343c59;
+  margin-top: 30px;
+  padding: 35px;
+  border-radius: 22px;
+  color: var(--ink);
+  background: var(--surface);
+  transition: background .25s;
+}
+.demo-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.demo-top h3 { font-size: 28px; margin: 0; }
+.demo-top span { font-size: 13px; }
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.panel { padding: 25px; }
+.panel h4 { margin-top: 0; font-size: 21px; }
+.field { margin-bottom: 20px; }
+.field label {
+  display: block;
+  margin-bottom: 9px;
+  font-weight: bold;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  color: inherit;
+  background: transparent;
+}
+.field textarea { min-height: 90px; resize: vertical; }
+.action {
+  padding: 13px 20px;
+  font-weight: bold;
+}
+.switch-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.switch-line input {
+  width: 22px;
+  height: 22px;
+  accent-color: #6652bd;
+}
+.sample-card { padding: 20px; margin-top: 20px; }
+.sample-card h5 { font-size: 18px; margin: 0 0 10px; }
+.sample-card p { line-height: 1.6; }
+.status { min-height: 24px; font-weight: bold; }
+.rating { margin-top: 25px; padding: 24px; }
+.rating h4 { margin-top: 0; }
+.stars {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+.stars button {
+  width: 48px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.stars button.selected { outline: 3px solid currentColor; }
+.muted { opacity: .8; font-size: 14px; }
+
+/* BRUTALISM */
+.demo.brutalism {
+  --surface: #ffe13c;
+  --ink: #111;
+  background: #ffe13c;
+  border: 4px solid black;
+  border-radius: 0;
+  box-shadow: 9px 9px black;
+}
+.demo.brutalism .panel,
+.demo.brutalism .sample-card,
+.demo.brutalism .rating {
+  background: #fff9d0;
+  border: 3px solid black;
+  border-radius: 0;
+  box-shadow: 5px 5px black;
+}
+.demo.brutalism .field input,
+.demo.brutalism .field select,
+.demo.brutalism .field textarea {
+  border: 3px solid black;
+  background: white;
+  border-radius: 0;
+}
+.demo.brutalism .action,
+.demo.brutalism .stars button {
+  background: black;
+  color: white;
+  border: 2px solid black;
+  border-radius: 0;
+}
+
+/* NEUMORPHISM */
+.demo.neumorphism {
+  --surface: #e8ebf2;
+  --ink: #343c59;
+  background: #e8ebf2;
+  border-radius: 28px;
+  box-shadow: 10px 10px 20px #c6c9d0,
+             -10px -10px 20px white;
+}
+.demo.neumorphism .panel,
+.demo.neumorphism .sample-card,
+.demo.neumorphism .rating {
+  background: #e8ebf2;
+  border-radius: 22px;
+  box-shadow: 7px 7px 15px #c6c9d0,
+             -7px -7px 15px white;
+}
+.demo.neumorphism .field input,
+.demo.neumorphism .field select,
+.demo.neumorphism .field textarea {
+  border-radius: 14px;
+  background: #e8ebf2;
+  box-shadow: inset 5px 5px 9px #c6c9d0,
+              inset -5px -5px 9px white;
+}
+.demo.neumorphism .action,
+.demo.neumorphism .stars button {
+  border: none;
+  border-radius: 13px;
+  color: #343c59;
+  background: #e8ebf2;
+  box-shadow: 5px 5px 10px #c6c9d0,
+             -5px -5px 10px white;
+}
+
+/* GLASSMORPHISM */
+.demo.glassmorphism {
+  --ink: white;
+  background:
+    radial-gradient(circle at 85% 15%,#fca6df,transparent 35%),
+    radial-gradient(circle at 10% 90%,#54d7e5,transparent 40%),
+    linear-gradient(135deg,#4769e7,#9652c8);
+  color: white;
+  border: 1px solid #ffffff80;
+  border-radius: 25px;
+  box-shadow: 0 15px 35px #b6a6d6;
+}
+.demo.glassmorphism .panel,
+.demo.glassmorphism .sample-card,
+.demo.glassmorphism .rating {
+  background: #ffffff25;
+  border: 1px solid #ffffff75;
+  border-radius: 20px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 10px 25px #24204430;
+}
+.demo.glassmorphism .field input,
+.demo.glassmorphism .field select,
+.demo.glassmorphism .field textarea {
+  background: #ffffff28;
+  border: 1px solid #ffffff88;
+  border-radius: 12px;
+  color: white;
+}
+.demo.glassmorphism input::placeholder,
+.demo.glassmorphism textarea::placeholder {
+  color: #f2eaff;
+}
+.demo.glassmorphism select option { color: #222; }
+.demo.glassmorphism .action,
+.demo.glassmorphism .stars button {
+  color: white;
+  background: #ffffff30;
+  border: 1px solid #ffffff99;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+}
+
+/* ПОРІВНЯННЯ */
+.comparison { margin-top: 100px; }
+.comparison h2 { font-size: 32px; }
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+th, td {
+  padding: 17px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+th { background: #292744; color: white; }
+footer {
+  padding: 45px 20px;
+  background: #1c1b35;
+  color: white;
+  text-align: center;
+}
+@media(max-width:850px) {
+  .style-options, .demo-grid { grid-template-columns: 1fr; }
+  .demo { padding: 18px; }
+  .hero { margin-top: 65px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">WEB<span>DESIGN</span></div>
+    <a href="#comparison">Порівняння</a>
+  </nav>
+  <div class="hero">
+    <small>ІНТЕРАКТИВНЕ ДОСЛІДЖЕННЯ · 2026</small>
+    <h1>Три стилі.<br>Один інтерфейс.</h1>
+    <p>
+      Порівняння Brutalism, Neumorphism та Glassmorphism
+      на основі однакових компонентів і завдань.
+    </p>
+    <a href="#styles">Почати дослідження ↓</a>
+  </div>
+</header>
+
+<main>
+  <section id="styles">
+    <div class="section-heading">
+      <h2>Оберіть стиль</h2>
+      <p>Натисніть на картку, щоб змінити оформлення демонстрації.</p>
+    </div>
+    <div class="style-options">
+      <article class="option brutalism">
+        <div>
+          <h3>Brutalism</h3>
+          <p>Контраст, товсті рамки, яскраві кольори.</p>
+        </div>
+        <button onclick="changeStyle('brutalism')">
+          Переглянути ↗
+        </button>
+      </article>
+      <article class="option neumorphism">
+        <div>
+          <h3>Neumorphism</h3>
+          <p>Об'ємні поверхні та м'які тіні.</p>
+        </div>
+        <button onclick="changeStyle('neumorphism')">
+          Переглянути ↗
+        </button>
+      </article>
+      <article class="option glassmorphism">
+        <div>
+          <h3>Glassmorphism</h3>
+          <p>Прозорість, розмиття та кольорові градієнти.</p>
+        </div>
+        <button onclick="changeStyle('glassmorphism')">
+          Переглянути ↗
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <section class="demo-section" id="demonstration">
+    <h2>Інтерактивна демонстрація</h2>
+    <p>
+      У всіх трьох стилях використано однакову структуру,
+      поля, кнопки та завдання. Змінюється лише оформлення.
+    </p>
+
+    <div class="demo neumorphism" id="demo">
+      <div class="demo-top">
+        <h3 id="current-style">Neumorphism</h3>
+        <span>ДЕМОНСТРАЦІЙНИЙ ІНТЕРФЕЙС</span>
+      </div>
+
+      <div class="demo-grid">
+        <div class="panel">
+          <h4>Форма користувача</h4>
+          <form id="test-form">
+            <div class="field">
+              <label for="username">Ваше ім'я</label>
+              <input id="username" type="text"
+                     placeholder="Введіть ім'я" required>
+            </div>
+            <div class="field">
+              <label for="category">Оберіть категорію</label>
+              <select id="category">
+                <option value="Дизайн">Дизайн</option>
+                <option value="Технології">Технології</option>
+                <option value="Освіта">Освіта</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="comment">Коментар</label>
+              <textarea id="comment"
+                placeholder="Напишіть короткий коментар"></textarea>
+            </div>
+            <button class="action" type="submit">
+              Надіслати форму
+            </button>
+          </form>
+          <p class="status" id="form-status" aria-live="polite"></p>
+        </div>
+
+        <div class="panel">
+          <h4>Інтерактивні компоненти</h4>
+          <p>Перевірте роботу перемикача:</p>
+          <label class="switch-line">
+            <input id="toggle" type="checkbox">
+            <span>Увімкнути сповіщення</span>
+          </label>
+          <p id="toggle-status" aria-live="polite">
+            Сповіщення вимкнені
+          </p>
+
+          <div class="sample-card">
+            <h5>Інформаційна картка</h5>
+            <p>
+              Це однаковий текст для всіх трьох стилів.
+              Порівняйте читабельність і візуальну ієрархію.
+            </p>
+            <button class="action" type="button"
+                    onclick="cardAction()">
+              Детальніше
+            </button>
+            <p id="card-status" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rating">
+        <h4>Оцінювання зручності</h4>
+        <p>Наскільки зручним є цей інтерфейс?</p>
+        <div class="stars" id="rating-buttons">
+          <button type="button" onclick="rate(1)">1</button>
+          <button type="button" onclick="rate(2)">2</button>
+          <button type="button" onclick="rate(3)">3</button>
+          <button type="button" onclick="rate(4)">4</button>
+          <button type="button" onclick="rate(5)">5</button>
+        </div>
+        <p id="rating-status" aria-live="polite">
+          Оцінку ще не обрано.
+        </p>
+        <p class="muted">
+          Оцінки зберігаються лише у цьому браузері.
+          Це демонстрація, а не централізоване опитування.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="comparison" id="comparison">
+    <h2>Порівняльна характеристика</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Критерій</th>
+            <th>Brutalism</th>
+            <th>Neumorphism</th>
+            <th>Glassmorphism</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Основна особливість</td>
+            <td>Контраст</td>
+            <td>Рельєф</td>
+            <td>Прозорість</td>
+          </tr>
+          <tr>
+            <td>Тіні</td>
+            <td>Різкі</td>
+            <td>М'які</td>
+            <td>Розмиті</td>
+          </tr>
+          <tr>
+            <td>Форми</td>
+            <td>Геометричні</td>
+            <td>Округлі</td>
+            <td>Плавні</td>
+          </tr>
+          <tr>
+            <td>Потенційний недолік</td>
+            <td>Візуальна різкість</td>
+            <td>Низький контраст</td>
+            <td>Складність читання</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <h2>WEB DESIGN RESEARCH</h2>
+  <p>Навчальний проєкт · 2026</p>
+</footer>
+
+<script>
+const names = {
+  brutalism: "Brutalism",
+  neumorphism: "Neumorphism",
+  glassmorphism: "Glassmorphism"
+};
+
+let currentStyle = "neumorphism";
+const ratings = {};
+
+function changeStyle(style) {
+  currentStyle = style;
+
+  const demo = document.getElementById("demo");
+  demo.className = "demo " + style;
+
+  document.getElementById("current-style").textContent =
+    names[style];
+
+  document.getElementById("form-status").textContent = "";
+  document.getElementById("card-status").textContent = "";
+
+  updateRating();
+
+  document.getElementById("demonstration")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("test-form")
+  .addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("username").value;
+    const category = document.getElementById("category").value;
+
+    document.getElementById("form-status").textContent =
+      "Форму перевірено! " + name +
+      ", обрана категорія: " + category + ".";
+  });
+
+document.getElementById("toggle")
+  .addEventListener("change", function() {
+    document.getElementById("toggle-status").textContent =
+      this.checked
+      ? "Сповіщення увімкнені"
+      : "Сповіщення вимкнені";
+  });
+
+function cardAction() {
+  document.getElementById("card-status").textContent =
+    "Кнопка працює!";
+}
+
+function rate(value) {
+  ratings[currentStyle] = value;
+  try {
+    localStorage.setItem(
+      "webdesign-rating-" + currentStyle,
+      String(value)
+    );
+  } catch (error) {
+    // Сайт працює і без локального збереження.
+  }
+  updateRating();
+}
+
+function updateRating() {
+  let value = ratings[currentStyle];
+
+  if (value === undefined) {
+    try {
+      value = Number(localStorage.getItem(
+        "webdesign-rating-" + currentStyle
+      )) || 0;
+    } catch (error) {
+      value = 0;
+    }
+  }
+
+  document.querySelectorAll("#rating-buttons button")
+    .forEach(function(button, index) {
+      button.classList.toggle(
+        "selected", index + 1 === value
+      );
+      button.setAttribute(
+        "aria-pressed", String(index + 1 === value)
+      );
+    });
+
+  document.getElementById("rating-status").textContent =
+    value
+    ? "Ваша оцінка для " + names[currentStyle] +
+      ": " + value + " із 5"
+    : "Оцінку ще не обрано.";
+}
+
+updateRating();
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f7;
+    color: #202033;
+}
+
+/* HEADER */
+
+.hero {
+    min-height: 520px;
+    background: linear-gradient(135deg, #17172b, #373b68, #7358a8);
+    color: white;
+    padding: 30px 8%;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #bca5ff;
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+}
+
+.hero-content {
+    max-width: 750px;
+    margin-top: 100px;
+}
+
+.eyebrow,
+.section-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #8b72d9;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 62px;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.hero-description {
+    color: #d6d6e8;
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 550px;
+}
+
+.main-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 25px;
+    background: white;
+    color: #24243d;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.main-button:hover {
+    background: #c9baff;
+    transform: translateY(-4px);
+}
+
+/* INTRO */
+
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 80px 30px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.intro h2,
+.comparison h2 {
+    font-size: 36px;
+    margin-bottom: 18px;
+}
+
+.intro > p:last-child {
+    color: #777;
+    line-height: 1.7;
+}
+
+/* STYLE CARDS */
+
+.styles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.style-card {
+    min-height: 370px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.35s;
+}
+
+.style-card:hover {
+    transform: translateY(-10px);
+}
+
+.number {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.card-content h2 {
+    font-size: 32px;
+    margin: 12px 0;
+}
+
+.card-content p {
+    line-height: 1.7;
+}
+
+.category {
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.card-content a {
+    display: inline-block;
+    margin-top: 25px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* BRUTALISM */
+
+.brutalism {
+    background: #ffdf35;
+    border: 3px solid #111;
+    box-shadow: 8px 8px 0 #111;
+    color: #111;
+}
+
+.brutalism .card-content a {
+    background: #111;
+    color: white;
+    padding: 13px 18px;
+}
+
+/* NEUMORPHISM */
+
+.neumorphism {
+    background: #e7e9f0;
+    color: #42465b;
+    border-radius: 25px;
+    box-shadow: 10px 10px 20px #c7c9d0,
+                -10px -10px 20px white;
+}
+
+.neumorphism .card-content a {
+    color: #42465b;
+    padding: 13px 18px;
+    border-radius: 12px;
+    box-shadow: 5px 5px 10px #c7c9d0,
+                -5px -5px 10px white;
+}
+
+/* GLASSMORPHISM */
+
+.glassmorphism {
+    background: linear-gradient(135deg, #5266dc, #b36bdc);
+    color: white;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 15px 35px rgba(70,50,130,0.2);
+}
+
+.glassmorphism .card-content a {
+    color: white;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.6);
+    padding: 13px 18px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+/* COMPARISON */
+
+.comparison {
+    margin-top: 120px;
+}
+
+.comparison h2 {
+    margin-bottom: 35px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #292943;
+    color: white;
+}
+
+tr:hover td {
+    background: #f0eff8;
+}
+
+/* FOOTER */
+
+footer {
+    background: #202033;
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+footer h2 {
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+footer p {
+    color: #b9b9cc;
+    margin-top: 10px;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+    .styles {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero-content {
+        margin-top: 75px;
+    }
+
+    .intro h2,
+    .comparison h2 {
+        font-size: 28px;
+    }
+}
