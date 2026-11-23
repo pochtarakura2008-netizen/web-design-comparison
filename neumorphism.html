@@ -3,3 +3,29 @@
 </style></head><body><main><p><a href="index.html">← Головна сторінка</a></p><h1>Neumorphism</h1><p>Однакові елементи й завдання для порівняння трьох стилів вебдизайну.</p><div class="layout"><section class="panel"><h2>Форма користувача</h2><form id="form"><label for="name">Ваше ім'я</label><input id="name" required placeholder="Введіть ім'я"><label for="category">Оберіть категорію</label><select id="category"><option>Дизайн</option><option>Технології</option><option>Освіта</option></select><label for="comment">Коментар</label><textarea id="comment" placeholder="Напишіть коментар"></textarea><button>Надіслати форму</button></form><p class="notice" id="status" aria-live="polite"></p></section><section class="panel"><h2>Інтерактивні компоненти</h2><label><input id="toggle" type="checkbox"> Увімкнути сповіщення</label><p id="toggle-status" aria-live="polite">Сповіщення вимкнені</p><div class="sample"><h3>Інформаційна картка</h3><p>Це однаковий текст для всіх трьох стилів. Порівняйте читабельність і візуальну ієрархію.</p><button type="button" id="details">Детальніше</button><p id="details-status" aria-live="polite"></p></div></section></div><section class="rating"><h2>Оцінювання зручності</h2><p>Наскільки зручним є цей інтерфейс?</p><div id="scores"><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button><button type="button" data-score="3" aria-pressed="false">3</button><button type="button" data-score="4" aria-pressed="false">4</button><button type="button" data-score="5" aria-pressed="false">5</button></div><p id="rating-status" aria-live="polite">Оцінку ще не обрано</p><small>Оцінка зберігається лише в цьому браузері, не надсилається досліднику.</small></section></main><script>
 document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();document.getElementById('status').textContent='Форму перевірено! '+document.getElementById('name').value;});document.getElementById('toggle').addEventListener('change',e=>{document.getElementById('toggle-status').textContent=e.target.checked?'Сповіщення увімкнені':'Сповіщення вимкнені';});document.getElementById('details').addEventListener('click',()=>{document.getElementById('details-status').textContent='Кнопка працює!';});const key='webdesign-rating-neumorphism';let selected=0;try{selected=Number(localStorage.getItem(key))||0}catch(e){}function refresh(){document.querySelectorAll('#scores button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.score)===selected)));document.getElementById('rating-status').textContent=selected?'Ваша оцінка: '+selected+' із 5':'Оцінку ще не обрано';}document.querySelectorAll('#scores button').forEach(b=>b.addEventListener('click',()=>{selected=Number(b.dataset.score);try{localStorage.setItem(key,String(selected))}catch(e){}refresh();}));refresh();
 </script></body></html>
+<style>
+/* Покращення доступності */
+body {
+  color: #172033;
+}
+
+input, select, textarea {
+  color: #172033;
+  border: 2px solid #52627a;
+}
+
+button {
+  color: #ffffff;
+  background-color: #243b63;
+  border: 2px solid #172033;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #ff9900;
+  outline-offset: 3px;
+}
+</style>
